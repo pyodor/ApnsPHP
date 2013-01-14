@@ -35,6 +35,9 @@ function ApnsPHP_Autoload($sClassName)
 	if (empty($sClassName)) {
 		throw new Exception('Class name is empty');
 	}
+    
+    $apnsClass = explode("_", $sClassName);
+    if($apnsClass[0]!="ApnsPHP") return;
 
 	$sPath = dirname(dirname(__FILE__));
 	if (empty($sPath)) {
@@ -44,8 +47,9 @@ function ApnsPHP_Autoload($sClassName)
 	$sFile = sprintf('%s%s%s.php',
 		$sPath, DIRECTORY_SEPARATOR,
 		str_replace('_', DIRECTORY_SEPARATOR, $sClassName)
-	);
-	if (!is_file($sFile) || !is_readable($sFile)) {
+    );
+    //debug($sFile);
+    if (!is_file($sFile) || !is_readable($sFile)) {
 		throw new Exception("Class file '{$sFile}' does not exists");
 	}
 
